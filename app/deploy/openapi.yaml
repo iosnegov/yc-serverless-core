@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Storage API
+  version: 1.0.0
+
+paths:
+  /:
+    get:
+      summary: List available actions
+      x-yc-apigateway-integration:
+        type: dummy
+        content:
+          application/json: |
+            {
+              "available_actions": [
+                "generate_upload_url",
+                "download_object",
+                "delete_object",
+                "get_object_metadata",
+                "list_objects"
+              ]
+            }
+        http_code: 200
+        http_headers:
+          Content-Type: application/json
+
+  /storage/upload-url:
+    post:
+      summary: Generate presigned upload URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storage_key:
+                  type: string
+                  minLength: 1
+              required: ["storage_key"]
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
+        payload_format_version: '0.1'
+        context:
+          action: generate_upload_url
+
+  /storage/download:
+    get:
+      summary: Download object by key
+      parameters:
+        - name: storage_key
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
+        payload_format_version: '0.1'
+        context:
+          action: download_object
+
+  /storage/delete:
+    delete:
+      summary: Delete object by key
+      parameters:
+        - name: storage_key
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
+        payload_format_version: '0.1'
+        context:
+          action: delete_object
+
+  /storage/metadata:
+    get:
+      summary: Get object metadata
+      parameters:
+        - name: storage_key
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
+        payload_format_version: '0.1'
+        context:
+          action: get_object_metadata
+
+  /storage/list:
+    get:
+      summary: List objects in bucket
+      parameters:
+        - name: max_keys
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: <FUNCTION_ID>
+        service_account_id: <SERVICE_ACCOUNT_ID>
+        payload_format_version: '0.1'
+        context:
+          action: list_objects

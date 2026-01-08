@@ -1,0 +1,30 @@
+[workspace]
+authors = ["Sierra Arn"]
+channels = ["conda-forge"]
+name = "yc-serverless-core"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+# =====================================================
+# Environment Setup
+# =====================================================
+# Create local environment configuration file from template
+# Copy .env.example to .env for initial project setup
+# After copying, edit .env file to set your specific configuration values
+copy-env = {cmd = "cp .env.example .env"}
+
+[dependencies]
+python = "*"
+requests = "*"
+pyjwt = "*"
+cryptography = "*"
+boto3 = "*"
+pydantic-settings = "*"
+
+[feature.test.dependencies]
+ipykernel = "*"
+
+[environments]
+test = ["test"]

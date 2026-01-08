@@ -1,0 +1,9 @@
+# VS Code
+.vscode/
+
+# Environments
+.pixi/
+.env
+
+# Python-generated files
+__pycache__/
