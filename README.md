@@ -1,9 +1,10 @@
-# **Yandex Cloud Serverless Core**
+# Yandex Cloud Serverless Core
+
 *An educational project demonstrating how to deploy serverless applications on Yandex Cloud.*
 
-## **Project Structure**
+## Project Structure
 
-```bash
+```
 yc-serverless-core/
 ├── app/                   # Main application code
 ├── .env.example           # Example environment variables file
@@ -13,49 +14,43 @@ yc-serverless-core/
 └── test-deploy.ipynb      # Jupyter notebook for playground testing
 ```
 
-## **Dependencies Overview**
+## Dependencies Overview
 
-- [requests](https://github.com/psf/requests) — 
-a widely-used Python library for making synchronous HTTP requests.
-
-- [PyJWT](https://github.com/jpadilla/pyjwt) — 
-a simple Python library for encoding and decoding JSON Web Tokens (JWT).
-
-- [cryptography](https://github.com/pyca/cryptography) — 
-a powerful, low-level cryptographic Python library for implementing secure encryption, signing, hashing, and key management primitives.
-
-- [boto3](https://github.com/boto/boto3) — 
-a synchronous Python client for Amazon S3 and other AWS services; compatible with S3-compatible storage systems. [^1]
+| Dependency | Repository | What it is |
+| :--- | :--- | :--- |
+| **CPython** | [python/cpython](https://github.com/python/cpython) | The de facto standard implementation of the Python programming language. |
+| **requests** | [psf/requests](https://github.com/psf/requests) | Widely-used library for making synchronous HTTP requests. |
+| **PyJWT** | [jpadilla/pyjwt](https://github.com/jpadilla/pyjwt) | Simple library for encoding and decoding JSON Web Tokens (JWT). |
+| **cryptography** | [pyca/cryptography](https://github.com/pyca/cryptography) | Low-level library for secure encryption, signing, hashing, and key management primitives. |
+| **boto3** | [boto/boto3](https://github.com/boto/boto3) | Synchronous Python client for Amazon S3 and other AWS services; compatible with S3-compatible storage systems. [^1] |
+| **pydantic-settings** | [pydantic/pydantic-settings](https://github.com/pydantic/pydantic-settings) | Pydantic-powered library for managing application configuration and environment variables with strong typing, validation, and seamless `.env` support. |
+| **ipykernel** *(Dev)* | [ipython/ipykernel](https://github.com/ipython/ipykernel) | IPython kernel for Jupyter, used for interactive notebook development and local environment testing. |
 
 [^1]: This project uses only synchronous code because Yandex Cloud Functions (like most serverless platforms) handle each request in an isolated, short-lived execution environment. There is no persistent event loop or concurrent request handling, so asynchronous I/O provides no benefit.
 
-- [pydantic-settings](https://github.com/pydantic/pydantic-settings) — 
-a Pydantic-powered library for managing application configuration and environment variables with strong typing, validation, and seamless `.env` support.
+## Quick Start
 
-### **Testing & Development Dependencies**
+### I. Prerequisites
 
-- [ipykernel](https://github.com/ipython/ipykernel) — 
-the IPython kernel for Jupyter, enabling interactive notebook development and seamless integration with the project’s virtual environments.
+| Component            | Requirement                               |
+| :------------------- | :---------------------------------------- |
+| **Package Manager**  | [`Pixi`](https://pixi.prefix.dev/latest/) |
+| **Operating System** | GNU/Linux-based system                    |
+| **Architecture**     | `x86_64`                                  |
 
-## **Quick Start**
-
-### **I. Prerequisites**
-
-- [Pixi](https://pixi.sh/latest/) package manager.
-
-> **Platform note**: All development and testing were performed on `linux-64`.  
-> If you're using a different platform, you’ll need to:
-> 1. Update the `platforms` list in the `pixi.toml` accordingly.
-> 2. Ensure that platform-specific scripts are compatible with your operating system or replace them with equivalents.
+> **Note:**  
+> These are not strict requirements, but rather the baseline environment where the code is 
+guaranteed to run out of the box. Alternative setups are possible but may require manual 
+configuration.
 
 ---
 
-### **II. Initial Setup**
+### II. Initial Setup
 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/Sierra-Arn/yc-serverless-core.git
+   git clone https://github.com/snegoviol/yc-serverless-core.git
    cd yc-serverless-core
    ```
 
@@ -73,11 +68,11 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-### **III. Cloud Environment Preparation**
+### III. Cloud Environment Preparation
 
 ---
 
-#### **i. Create a Folder**
+#### i. Create a Folder
 
 1. Go to the [Clouds page](https://console.yandex.cloud/clouds).
 2. Find your cloud in the list and click the `three-dot menu` next to its name.
@@ -87,7 +82,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **ii. Create a Service Account**
+#### ii. Create a Service Account
 
 1. Find your folder in the list and click the `three-dot menu` next to its name.
 2. Select `Create service account`.
@@ -96,7 +91,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **iii. Assign Required Roles to the Service Account**
+#### iii. Assign Required Roles to the Service Account
 
 1. Find your folder in the list and click the `three-dot menu` next to its name.
 2. Select `Access bindings`.
@@ -115,7 +110,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **iv. Create an Authorized Key for the Service Account**
+#### iv. Create an Authorized Key for the Service Account
 
 1. In the management console, make sure you’re in the correct folder.
 2. In the folder services list, find and click `Identity and Access Management`.
@@ -129,7 +124,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **v. Obtain the Folder ID**
+#### v. Obtain the Folder ID
 
 1. Go to the [Folders page](https://console.yandex.cloud/folders).
 2. Find your folder in the list and click its name.
@@ -140,7 +135,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **vi. Create Static Access Keys for Object Storage**
+#### vi. Create Static Access Keys for Object Storage
 
 1. In the management console, make sure you’re in the correct folder.
 2. In the folder services list, find and click `Identity and Access Management`.
@@ -152,7 +147,7 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-#### **vii. Obtain the Service Account ID**
+#### vii. Obtain the Service Account ID
 
 1. In the management console, make sure you’re in the correct folder.
 2. In the folder services list, find and click `Identity and Access Management`.
@@ -163,10 +158,10 @@ the IPython kernel for Jupyter, enabling interactive notebook development and se
 
 ---
 
-### **III. Testing**
+### III. Testing
 
 Once the environment is set up, you can run and test the serverless backend using the interactive Jupyter notebook `test-deploy.ipynb`. It demonstrates the full workflow — including backend deployment and all REST API endpoints.
 
-## **License**
+## License
 
-This project is licensed under the [BSD-3-Clause License](LICENSE).
+Each file in this repository is licensed under the [MIT No Attribution License](LICENSE.txt).

@@ -1,6 +1,5 @@
 [workspace]
 authors = ["Sierra Arn"]
-channels = ["conda-forge"]
 name = "yc-serverless-core"
 platforms = ["linux-64"]
 version = "0.1.0"
