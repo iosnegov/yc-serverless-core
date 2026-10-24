@@ -2,6 +2,17 @@
 
 *An educational project demonstrating how to deploy serverless applications on Yandex Cloud.*
 
+> [!WARNING]
+> **Project Archived**
+> 
+> This project is no longer actively maintained. 
+> 
+> **Context:**  
+> Originally, this repository began as a university assignment. Rather than simply completing the task and discarding the code, I chose to expand it into a structured mini-project to deeply explore Yandex Cloud Serverless capabilities. Over time, however, my professional and academic focus has shifted entirely away from Serverless computing.
+> 
+> **Reason for Archiving:**  
+> Consequently, I no longer have an interest in further maintaining this codebase, as my current work no longer involves Serverless architectures. This repository remains available purely as an educational reference for those interested in learning how to structure and deploy basic Serverless applications in Yandex Cloud from scratch.
+
 ## Project Structure
 
 ```
